@@ -18,6 +18,14 @@ module Fog
         "fog-#{(SecureRandom.random_number*10E14).to_i.round}"
       end
 
+      def self.hash_except(hash, *attrs)
+        hash.respond_to?(:except) ? hash.except(*attrs) : hash.reject { |key, _| attrs.include?(key) }
+      end
+
+      def hash_except(*attrs)
+        Util.hash_except(*attrs)
+      end
+
       module ClassMethods
         def xml_attrs(node, autocast_int: false)
           return {} unless node
